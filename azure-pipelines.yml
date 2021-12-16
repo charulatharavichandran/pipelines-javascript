@@ -1,4 +1,5 @@
 # Node.js
+
 # Build a general Node.js project with npm.
 # Add steps that analyze code, save build artifacts, deploy, and more:
 # https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
@@ -15,6 +16,12 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 
+- task: NuGetCommand@2
+  inputs:
+    command: 'push'
+    packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
+    nuGetFeedType: 'internal'
+    publishVstsFeed: '3830cc9c-0662-4314-937a-98454055680a/f5ebbdfb-3ad9-4fb3-8cd1-81b4a4b2849f'
 - script: |
     npm install
     npm run build
